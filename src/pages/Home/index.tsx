@@ -30,6 +30,7 @@ function HomePage() {
                 return
             }
 
+            setResult(undefined)
             await upload(acceptedFiles)
         },
     })
@@ -44,6 +45,16 @@ function HomePage() {
 
     const upload = useCallback(async (files: File[]) => {
         const data = new FormData();
+
+        if (!files.length) {
+            toast.error("File not found", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+            })
+
+            return
+        }
         data.append('file', files[0])
         setFile(files[0])
 
